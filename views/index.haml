@@ -1,0 +1,10 @@
+%html
+  %head
+    %title augweb
+    %link{:rel=>"stylesheet", :href=>"augweb.css"}
+  %body
+    .project_list
+      %ul
+        - @projects.each do |id, project|
+          %li
+            %a{:href => id}= project.name
