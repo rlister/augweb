@@ -43,9 +43,9 @@ var augweb = {
 
   // increment display to show
   incr_display_type: function(incr) {
-    var element = d3.select("#displays"),                                     // html select element
-        length  = element.property("children").length,                        // number of option elements
-        index   = (incr + element.property("selectedIndex")) % length,        // increment selected index
+    var element = d3.select("#displays"), // html select element
+        length  = element.property("children").length, // number of option elements
+        index   = (incr + element.property("selectedIndex")) % length, // incr selected index
         func    = element.property("selectedIndex", index).property("value"); // get function to call
 
     this[func](this.data);
@@ -75,11 +75,11 @@ var augweb = {
   },
 
   timing_by_server: function(data) {
-    this.timing(data);
+    this.timing(this.transpose(data));
   },
 
   timing_by_test: function(data) {
-    this.timing(this.transpose(data));
+    this.timing(data);
   },
 
   transpose: function(data) {          // transpose server and tests arrays
