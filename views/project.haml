@@ -9,7 +9,7 @@
       %input{type: "button", value: "Run", class: "run", onclick: "augweb.run('#{@project}')"}
     .project
     .top-right
-      %select#displays{onchange: "augweb.call_func(this.value)"}
+      %select#displays{onchange: "augweb[this.value](augweb.data)"}
         %option{value: "tabulate_by_server"}
           tabulate by server
         %option{value: "tabulate_by_test"}
