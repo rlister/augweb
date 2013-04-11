@@ -1,0 +1,28 @@
+%html
+  %head
+    %title augweb
+    %link{rel: "stylesheet", href: "augweb.css"}
+  %body
+    .top-left
+      %a{href: "/"}
+        %img.icon{src: "Home_Icon.svg"}
+      %input{type: "button", value: "Run", class: "run", onclick: "augweb.run('#{@project}')"}
+    .project
+    .top-right
+      %select#displays{onchange: "augweb.call_func(this.value)"}
+        %option{value: "tabulate_by_server"}
+          tabulate by server
+        %option{value: "tabulate_by_test"}
+          tabulate by test
+        %option{value: "timing_by_server"}
+          timing by server
+        %option{value: "timing_by_test"}
+          timing by test
+    
+    #results
+    %script{type: "text/javascript", src: "d3.min.js"}
+    %script{type: "text/javascript", src: "augweb.js"}
+    :javascript
+      window.onload = function() {
+        augweb.project("#{@project}").bind_keys().run();
+      };
