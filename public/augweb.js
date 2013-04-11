@@ -52,8 +52,9 @@ var augweb = {
     return this;
   },
 
+  // run auger test
   run: function() {
-    d3.select('.project').html('testing ...'); // lo-tech throbber
+    d3.select('.project').html('testing ...'); // super-lo-tech throbber
 
     var self = this;
     d3.json('/run/' + this.project_id, function(json) {
@@ -82,7 +83,8 @@ var augweb = {
     this.timing(data);
   },
 
-  transpose: function(data) {          // transpose server and tests arrays
+  // transpose server and tests arrays
+  transpose: function(data) {
     return{
       tests: data.servers.map(function(server) { return server.name }),
       servers: data.tests.map(function(test, i) {
@@ -96,7 +98,8 @@ var augweb = {
     }
   },
 
-  tabulate: function(data) {           // draw html table
+  // draw html table
+  tabulate: function(data) {
     var headers = [ "" ]
       .concat(data.tests)
       .map(function(header) {
@@ -136,6 +139,7 @@ var augweb = {
     return table;
   },
 
+  // draw timing bar chart
   timing: function(data) {
     var num_elements = data.tests.length * data.servers.length,
         min_height = 400,
