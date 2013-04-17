@@ -9,7 +9,7 @@ Web UI for [auger](http://github.com/brewster/auger).
 ## How do I run it?
 
     bundle install
-    ln -s your/auger/cfg cfg
+    ln -s your/auger/config.yml config.yml
     rackup
     open http://localhost:9292
 
