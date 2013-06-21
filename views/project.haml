@@ -1,13 +1,14 @@
 %html
   %head
     %title augweb
-    %link{rel: "stylesheet", href: "augweb.css"}
+    %link{rel: "stylesheet", href: "/augweb.css"}
   %body
     .top-left
       %a{href: "/"}
-        %img.icon{src: "Home_Icon.svg"}
+        %img.icon{src: "/Home_Icon.svg"}
       %input{type: "button", value: "Run", class: "run", onclick: "augweb.run('#{@project}')"}
     .project
+      Project: #{@project}
     .top-right
       %select#displays{onchange: "augweb[this.value](augweb.data)"}
         %option{value: "tabulate_by_test"}
@@ -20,8 +21,8 @@
           timing by server
     
     #results
-    %script{type: "text/javascript", src: "d3.min.js"}
-    %script{type: "text/javascript", src: "augweb.js"}
+    %script{type: "text/javascript", src: "/d3.min.js"}
+    %script{type: "text/javascript", src: "/augweb.js"}
     :javascript
       window.onload = function() {
         augweb.project("#{@project}").bind_keys().run();

@@ -10,35 +10,27 @@ require 'json'
 configure do
   set :auger_cfg, 'cfg'       #default values
   config_file 'config.yml'    #overwrite from config file if it exists
-
-  set :path, settings.auger_cfg.split(File::PATH_SEPARATOR)
 end
 
 def list_files
-  settings.path.map do |dir|
-    Dir["#{dir}/*.rb"]
-  end.flatten
+  Dir.chdir(settings.auger_cfg) do
+    Dir.glob("**/[^_]*.rb")
+  end
 end
 
 def load_projects
   list_files.inject({}) do |hash, file|
-    project = Auger::Config.load(file).projects.first
-    id = File.basename(file).sub(/\.\w+$/, "")
+    filepath = File.join(settings.auger_cfg, file)
+    project = Auger::Config.load(filepath).projects.first
+    id = file.sub(/\.\w+$/, "")
     hash[id] = project
     hash
   end
 end
 
-def find_file(name)
-  settings.path.map do |dir|
-    File.join(dir, "#{name}.rb")
-  end.find do |file|
-    File.exists?(file)
-  end
-end
-
 def load_project(name)
-  Auger::Config.load(find_file(name)).projects.first
+  file = File.join(settings.auger_cfg, name) + '.rb'
+  Auger::Config.load(file).projects.first
 end
 
 class Auger::Project
@@ -162,13 +154,13 @@ get '/projects' do
   JSON(projects)
 end
 
-get '/run/:id' do
-  project = load_project(params[:id])
+get %r{^/run/([\w/]+)$} do
+  project = load_project params[:captures].first
   JSON(run_tests(project))
 end
 
-get '/:id' do
-  @project = params[:id]
+get %r{^/([\w/]+)$} do
+  @project = params[:captures].first
   haml :project
 end
 
@@ -176,5 +168,6 @@ get '/' do
   @projects = load_projects.sort_by do |id, project|
     project.name
   end
+  
   haml :index
 end
