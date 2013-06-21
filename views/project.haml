@@ -10,14 +10,14 @@
     .project
     .top-right
       %select#displays{onchange: "augweb[this.value](augweb.data)"}
-        %option{value: "tabulate_by_server"}
-          tabulate by server
         %option{value: "tabulate_by_test"}
           tabulate by test
-        %option{value: "timing_by_server"}
-          timing by server
+        %option{value: "tabulate_by_server"}
+          tabulate by server
         %option{value: "timing_by_test"}
           timing by test
+        %option{value: "timing_by_server"}
+          timing by server
     
     #results
     %script{type: "text/javascript", src: "d3.min.js"}
